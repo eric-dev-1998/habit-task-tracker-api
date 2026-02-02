@@ -71,4 +71,3 @@ REST API design
 Database modeling
 
 Preparation for real mobile app integration
->>>>>>> 20524353c8437049996f845f08d0650eba293ccc
