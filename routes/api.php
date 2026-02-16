@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('tasks', TaskController::class);
-
     Route::apiResource('habits', HabitController::class);
+    
     Route::post('habits/{habit}/complete', [HabitController::class, 'complete']);
 });
