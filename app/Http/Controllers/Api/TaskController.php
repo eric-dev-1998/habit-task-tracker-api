@@ -11,12 +11,10 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Task::all();
+        return $request->user()->tasks;
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -24,19 +22,21 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' -> 'required|string|max:255',
-            'user_id' -> 'required|exists:users,id'
+            'title' => 'required|string|max:255',
+            'description' => 'sometimes|max:255'
         ]);
 
-        $task = Task::create($validated);
+        $task = $request->user()->tasks()->create($validated);
+        
         return response()->json($task, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
+        $task = $request->user()->tasks()->findOrFail($id);
         return response()->json($task);
     }
 
@@ -45,16 +45,34 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $task->update($request->all());
+        $task = $request->user()->tasks()->findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|max:255',
+            'completed' => 'sometimes|required|boolean'
+        ]);
+
+        if(array_key_exists('completed', $validated)){
+            $task->completed_at = $validated['completed'] ? now() : null;
+            unset($validated['completed']);
+        }
+
+        $task->update($validated);
         return response()->json($task);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
+        $task = $request->user()->tasks()->findOrFail($id);
+    
         $task->delete();
-        return response()->json(null, 204);
+
+        return response()->json([
+            'message' => 'Task deleted succesfully.'
+        ]);
     }
 }
