@@ -13,7 +13,9 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->tasks;
+        $perPage = min($request->get('per_page', 10), 50);
+        dd($request->user()->tasks()->toSql());
+        return $request->user()->tasks()->latest()->paginate($perPage);
     }
 
     /**

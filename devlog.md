@@ -1,19 +1,19 @@
-### 2/2/2026 11:34pm:
+## 2/2/2026 11:34pm:
 Installed Laravel sanctum, coded the controller and it's routes. 
 
-Next:
+### Next:
 Test auth routes.
 
-### 2/3/2026 19:26pm:
+## 2/3/2026 19:26pm:
 An exception is beign thrown with error "Route [login] not defined.".
 
-Next:
+### Next:
 Fix it.
 
-### 2/9/2026: 16:59pm:
+## 2/9/2026: 16:59pm:
 Tasks routes are not working, fix them.
 
-### 2/16/2026 11:12pm:
+## 2/16/2026 11:12pm:
 The following routes have been tested and are working:
 1. Server -> Health.
 2. User -> Regiser.
@@ -24,9 +24,12 @@ The following routes have been tested and are working:
 7. Task -> Update (Title, description and completed_at for now).
 8. Task -> Delete.
 
-# Notes:
+### Notes:
 1. Due date in tasks table is not beign set when routes are called.
 
-# Next:
-1. Code habit routes.
-2. Test habit routes.
+### Next:
+1. [Done] Code habit routes.
+2. [Done] Test habit routes.
+
+## 2/16/2026 13:54pm:
+All routes were tested in postman and are working properly.

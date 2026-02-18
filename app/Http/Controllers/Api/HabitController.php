@@ -12,9 +12,10 @@ class HabitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Habit::all();
+        $perPage = min($request->get('per_page', 10), 50);
+        return $request->user()->habits()->latest()->paginate($perPage);
     }
 
     /**
