@@ -14,8 +14,22 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $perPage = min($request->get('per_page', 10), 50);
-        dd($request->user()->tasks()->toSql());
-        return $request->user()->tasks()->latest()->paginate($perPage);
+
+        $query = $request->user()->tasks();
+
+        if($request->has('completed')){
+            if($request->completed === 'true'){
+                $query->whereNotNull('completed_at');
+            } else {
+                $query->whereNull('completed_at');
+            }
+        }
+
+        if($request->has('search')){
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        return $query->latest()->paginate($perPage);
     }
 
     /**

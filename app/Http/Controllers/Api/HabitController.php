@@ -15,7 +15,26 @@ class HabitController extends Controller
     public function index(Request $request)
     {
         $perPage = min($request->get('per_page', 10), 50);
-        return $request->user()->habits()->latest()->paginate($perPage);
+
+        $query = $request->user()->habits();
+
+        $date = $request->get('date', now()->toDateString());
+
+        if($request->has('completed')){
+            $date = $request->get('date', now()->toDateString());
+
+            if($request->completed === 'true'){
+                $query->whereHas('logs', function ($q) use ($date){
+                    $q->whereDate('created_at', $date);
+                });
+            } else {
+                $query->whereDoesntHave('logs', function ($q) use ($date){
+                    $q->whereDate('created_at', $date);
+                });
+            }
+        }
+
+        return $query->latest()->paginate($perPage);
     }
 
     /**
