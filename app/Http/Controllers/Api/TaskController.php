@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
 use App\Models\Task;
 
@@ -15,7 +16,10 @@ class TaskController extends Controller
     {
         $perPage = min($request->get('per_page', 10), 50);
 
-        $query = $request->user()->tasks();
+        $sortDirection = $request->get('sort', 'desc');
+        $sortDirection = $sortDirection === 'asc' ? 'asc' : 'desc';
+
+        $query = $request->user()->tasks()->orderBy('created_at', $sortDirection);
 
         if($request->has('completed')){
             if($request->completed === 'true'){
@@ -29,7 +33,12 @@ class TaskController extends Controller
             $query->where('title', 'like', '%' . $request->search . '%');
         }
 
-        return $query->latest()->paginate($perPage);
+        $tasks = TaskResource::collection($query->paginate($perPage));
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $tasks
+        ]);
     }
 
     /**
@@ -44,7 +53,10 @@ class TaskController extends Controller
 
         $task = $request->user()->tasks()->create($validated);
         
-        return response()->json($task, 201);
+        return response()->json([
+            'status' => 'success',
+            'data' => $task
+        ], 201);
     }
 
     /**
@@ -53,7 +65,10 @@ class TaskController extends Controller
     public function show(Request $request, string $id)
     {
         $task = $request->user()->tasks()->findOrFail($id);
-        return response()->json($task);
+        return response()->json([
+            'status' => 'success',
+            'data' => $task
+        ]);
     }
 
     /**
@@ -75,7 +90,11 @@ class TaskController extends Controller
         }
 
         $task->update($validated);
-        return response()->json($task);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $task
+        ]);
     }
 
     /**
@@ -88,6 +107,7 @@ class TaskController extends Controller
         $task->delete();
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Task deleted succesfully.'
         ]);
     }

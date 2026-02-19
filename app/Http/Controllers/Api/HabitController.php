@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\HabitResource;
 use Illuminate\Http\Request;
 use App\Models\Habit;
 use App\Models\HabitLog;
@@ -16,7 +17,10 @@ class HabitController extends Controller
     {
         $perPage = min($request->get('per_page', 10), 50);
 
-        $query = $request->user()->habits();
+        $sortDirection = $request->get('sort', 'desc');
+        $sortDirection = $sortDirection === 'asc' ? 'asc' : 'desc';
+
+        $query = $request->user()->habits()->orderBy('created_at', $sortDirection);
 
         $date = $request->get('date', now()->toDateString());
 
@@ -34,7 +38,12 @@ class HabitController extends Controller
             }
         }
 
-        return $query->latest()->paginate($perPage);
+        $habits = HabitResource::collection($query->paginate($perPage));
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $habits
+        ]);
     }
 
     /**
@@ -51,7 +60,10 @@ class HabitController extends Controller
         $habit = $request->user()->habits()->create($validated);
         $habitLog = $habit->logs()->create();
         
-        return response()->json($habit, 201);
+        return response()->json([
+            'status' => 'success',
+            'data' => $habit
+        ], 201);
     }
 
     /**
@@ -60,7 +72,10 @@ class HabitController extends Controller
     public function show(Request $request, string $id)
     {
         $task = $request->user()->tasks()->findOrFail($id);
-        return response()->json($habit);
+        return response()->json([
+            'status' => 'success',
+            'data' => $habit
+        ]);
     }
 
     /**
@@ -77,7 +92,11 @@ class HabitController extends Controller
         ]);
 
         $habit->update($validated);
-        return response()->json($habit);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $habit
+        ]);
     }
 
     /**
@@ -88,7 +107,10 @@ class HabitController extends Controller
         $habit = $request->user()->habits()->findOrFail($id);
         
         $habit->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Habit deleted successfully.'
+        ], 204);
     }
 
     public function complete(Request $request, string $id)
@@ -108,6 +130,9 @@ class HabitController extends Controller
             'completed_on' => $today
         ]);
 
-        return response()->json($log, 201);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Habit completed.'
+        ], 201);
     }
 }

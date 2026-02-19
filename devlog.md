@@ -31,5 +31,10 @@ The following routes have been tested and are working:
 1. [Done] Code habit routes.
 2. [Done] Test habit routes.
 
-## 2/16/2026 13:54pm:
+### 2/16/2026 13:54pm:
 All routes were tested in postman and are working properly.
+
+### 2/18/2026 19:20pm:
+Added:
+1. Consistent JSON response format for requests.
+2. Updated middleware configuration to handle unauthorized requests and avoid redirects.
