@@ -64,6 +64,7 @@ class TaskController extends Controller
      */
     public function show(Request $request, string $id)
     {
+        
         $task = $request->user()->tasks()->findOrFail($id);
         return response()->json([
             'status' => 'success',
@@ -79,14 +80,14 @@ class TaskController extends Controller
         $task = $request->user()->tasks()->findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'sometimes|required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'sometimes|max:255',
-            'completed' => 'sometimes|required|boolean'
+            'completed_at' => 'sometimes|required|boolean'
         ]);
 
-        if(array_key_exists('completed', $validated)){
-            $task->completed_at = $validated['completed'] ? now() : null;
-            unset($validated['completed']);
+        if(array_key_exists('completed_at', $validated)){
+            $task->completed_at = $validated['completed_at'] ? now() : null;
+            unset($validated['completed_at']);
         }
 
         $task->update($validated);

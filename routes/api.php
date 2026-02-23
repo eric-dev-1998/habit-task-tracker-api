@@ -6,14 +6,15 @@ use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\HabitController;
 use App\Http\Controllers\Api\AuthController;
 
-Route::get('/health', function () {
-    return response()->json(['status' => 'ok']);
-});
+Route::prefix('v1')->group(function() {
+    Route::get('/health', function () {
+        return response()->json(['status' => 'ok']);
+    });
+    
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::middleware('auth:sanctum')->group(function() {
+    Route::middleware('auth:sanctum')->group(function() {
     Route::get('/me', function (Request $request){
         return $request->user();
     });
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('habits', HabitController::class);
     
     Route::post('habits/{habit}/complete', [HabitController::class, 'complete']);
+});
 });

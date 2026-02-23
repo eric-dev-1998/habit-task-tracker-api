@@ -52,9 +52,9 @@ class HabitController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|min:1|max:255',
             'description' => 'sometimes|max:255',
-            'frecuency' => 'required|sometimes'
+            'frecuency' => 'required|numeric|min:1'
         ]);
 
         $habit = $request->user()->habits()->create($validated);
@@ -86,9 +86,9 @@ class HabitController extends Controller
         $habit = $request->user()->habits()->findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'sometimes|required|max:255',
-            'description' => 'sometimes|required|max:255',
-            'frecuency' => 'sometimes|required'
+            'title' => 'required|string|max:255',
+            'description' => 'sometimes|max:255',
+            'frecuency' => 'required|numeric|min:1'
         ]);
 
         $habit->update($validated);
