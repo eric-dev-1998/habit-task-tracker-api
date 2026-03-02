@@ -48,6 +48,29 @@ JSON responses following REST conventions
 
 Authentication via Laravel Sanctum (planned)
 
+## API Endpoints (v1)
+
+#### Auth
+    POST /api/v1/register
+    POST /api/v1/login
+    POST /api/v1/logout
+    GET  /api/v1/me
+
+#### Tasks
+    GET    /api/v1/tasks
+    POST   /api/v1/tasks
+    GET    /api/v1/tasks/{id}
+    PUT    /api/v1/tasks/{id}
+    DELETE /api/v1/tasks/{id}
+
+#### Habits
+    GET    /api/v1/habits
+    POST   /api/v1/habits
+    GET    /api/v1/habits/{id}
+    PUT    /api/v1/habits/{id}
+    DELETE /api/v1/habits/{id}
+    POST   /api/v1/habits/{id}/complete
+
 ## 🔮 Roadmap
 
 Implement authentication (Sanctum)
