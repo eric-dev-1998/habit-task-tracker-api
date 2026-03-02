@@ -4,6 +4,8 @@ A full-stack portfolio project focused on building a clean, scalable REST API to
 
 This project implements a Laravel-based backend with a MySQL database, designed to be consumed by a Flutter mobile client. The goal is to demonstrate solid backend architecture, RESTful design principles, and real-world data modeling for productivity applications.
 
+#### See the quick start guide: [Quick start guide](QuickStart.md)
+
 ## 🚀 Tech Stack
 
 Backend: Laravel (PHP)
