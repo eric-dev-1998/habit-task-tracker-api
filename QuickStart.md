@@ -8,8 +8,11 @@
 4. Pagination, filtering, sorting
 5. Mobile-ready JSON responses
 
-#### API base URL:
-http://localhost:8000/api/v1
+#### API base URL: http://localhost:8000/api/v1
+
+#### Postman collection: [Click to view](docs/Personal%20tracker.postman_collection.json)
+
+## Project setup:
 
 #### 1. Clone the repository.
 #### 2. Copy environment file:
