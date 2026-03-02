@@ -8,7 +8,13 @@ use App\Http\Controllers\Api\AuthController;
 
 Route::prefix('v1')->group(function() {
     Route::get('/health', function () {
-        return response()->json(['status' => 'ok']);
+        return response()->json([
+            'status' => 'Sucess',
+            'data' => [
+                'Service' => 'Personal Tracker API',
+                'Version' => 'v1'
+            ]
+            ]);
     });
     
     Route::post('/register', [AuthController::class, 'register']);
