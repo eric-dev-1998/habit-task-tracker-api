@@ -42,6 +42,7 @@ class HabitController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $habits
         ]);
     }
@@ -62,6 +63,7 @@ class HabitController extends Controller
         
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $habit
         ], 201);
     }
@@ -74,6 +76,7 @@ class HabitController extends Controller
         $task = $request->user()->tasks()->findOrFail($id);
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $habit
         ]);
     }
@@ -95,6 +98,7 @@ class HabitController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $habit
         ]);
     }
@@ -109,6 +113,7 @@ class HabitController extends Controller
         $habit->delete();
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'message' => 'Habit deleted successfully.'
         ], 204);
     }
@@ -132,6 +137,7 @@ class HabitController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'message' => 'Habit completed.'
         ], 201);
     }

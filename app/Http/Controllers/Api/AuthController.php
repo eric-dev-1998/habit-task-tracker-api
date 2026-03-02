@@ -29,6 +29,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => [
                 'user' => $user,
                 'token' => $token,
@@ -58,6 +59,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => [
                 'user' => $user,
                 'token' => $token,
@@ -70,6 +72,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'message' => 'Logged out successfully.'
         ]);
     }

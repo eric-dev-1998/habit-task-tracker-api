@@ -37,6 +37,7 @@ class TaskController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $tasks
         ]);
     }
@@ -55,6 +56,7 @@ class TaskController extends Controller
         
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $task
         ], 201);
     }
@@ -68,6 +70,7 @@ class TaskController extends Controller
         $task = $request->user()->tasks()->findOrFail($id);
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $task
         ]);
     }
@@ -94,6 +97,7 @@ class TaskController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'data' => $task
         ]);
     }
@@ -109,6 +113,7 @@ class TaskController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'version' => 'v1',
             'message' => 'Task deleted succesfully.'
         ]);
     }
